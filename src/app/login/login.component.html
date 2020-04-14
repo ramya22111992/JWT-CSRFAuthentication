@@ -1,0 +1,16 @@
+<form [formGroup]="loginForm" class="form-group jumbotron">
+
+<label for="user">Username</label>
+<input type="email" class="form-control" formControlName="username" name="username" id="user" placeholder="abc@xyz.com">
+<span *ngIf="loginForm.get('username').errors?.required && loginForm.get('username').touched">Username needed</span>
+<span *ngIf="loginForm.get('username').errors?.email && loginForm.get('username').touched">Username invalid</span>
+
+<br>
+<label for="pass">Password</label>
+<input type="password" class="form-control" formControlName="password" name="password" id="pass">
+<span *ngIf="loginForm.get('password').errors?.required && loginForm.get('password').touched">Password needed</span>
+<br>
+<button [disabled]="loginForm.invalid" class="btn btn-primary" (click)="loginUser()">Login</button>
+</form>
+
+<p #error></p>

@@ -1,0 +1,13 @@
+<form [formGroup]="commentForm" class="form-control jumbotron">
+
+  <label for="user">Name</label>
+  <input type="text" class="form-control" formControlName="username" name="username" id="user">
+
+  <label for="Useremail">Email</label>
+<input type="email" class="form-control" formControlName="userEmail" name="userEmail" id="Useremail">
+
+<label for="body">Comment</label>
+  <textarea width="200px" height="200px" class="form-control" formControlName="comment" name="comment" id="body"></textarea>
+
+  <button [disabled]="commentForm.invalid" class="btn btn-primary" (click)="submitComment()">Post</button>
+</form>
