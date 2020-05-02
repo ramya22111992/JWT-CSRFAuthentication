@@ -1,13 +1,35 @@
-<form [formGroup]="commentForm" class="form-control jumbotron">
 
-  <label for="user">Name</label>
-  <input type="text" class="form-control" formControlName="username" name="username" id="user">
 
-  <label for="Useremail">Email</label>
-<input type="email" class="form-control" formControlName="userEmail" name="userEmail" id="Useremail">
+<h4>Create new product</h4>
 
-<label for="body">Comment</label>
-  <textarea width="200px" height="200px" class="form-control" formControlName="comment" name="comment" id="body"></textarea>
+<form [formGroup]="ProductForm" class="form-group jumbotron">
 
-  <button [disabled]="commentForm.invalid" class="btn btn-primary" (click)="submitComment()">Post</button>
+  <input #prodImg  name="productImage" type="file" enctype="multipart/form-data" accept="images">
+
+  <input type="text" style="display:none" formControlName="productID" name="productID">
+
+  <label for="prod">Product</label>
+  <input type="text" class="form-control" formControlName="name" name="productName" id="prod">
+
+
+<label for="price">Price</label>
+<input type="text" class="form-control" formControlName="price" name="productPrice" id="price">
+
+  <button [disabled]="ProductForm.invalid" class="btn btn-primary" (click)="submitProduct()">Post</button>
 </form>
+
+
+<button (click)="retrieveProduct()">View products</button>
+
+<div *ngFor="let x of products">
+
+<div class="jumbotron">
+<h4>{{x.name}}</h4>
+<h4>Rs.{{x.price}}</h4>
+<img style="width:100px;height:100px" src="{{x.imgUrl}}">
+</div>
+
+</div>
+
+<app-error></app-error>
+

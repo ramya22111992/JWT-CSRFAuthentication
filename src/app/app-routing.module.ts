@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouteActivateService } from './route-activate.service';
+import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
     path:'dash',
     component:DashboardComponent,
     canActivate:[RouteActivateService]
+  }
+  ,{
+    path:'error',
+    component:ErrorComponent
   }
 ];
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {catchError, switchMap, take, mergeMap, concatMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,19 @@ export class DashboardService {
 
   constructor(private http:HttpClient) { }
 
-  submitComment(form)
+  createProductId():Observable<string>
   {
-    return this.http.post(this.serverUrl+"/comment",form,{withCredentials:true}).pipe(catchError(err=>throwError(err)));
+  return  this.http.get(this.serverUrl+"/productID",{withCredentials:true,responseType:'text'}).pipe(catchError(err=>throwError(err)));
+  }
+
+  submitProduct(form)
+  {
+       return this.http.post(this.serverUrl+"/addProduct",form,{withCredentials:true}).pipe(catchError(err=>throwError(err)));
+  }
+
+  retrieveProduct():Observable<any>
+  {
+    return this.http.get(this.serverUrl+"/getProducts",{withCredentials:true}).pipe(catchError(err=>throwError(err)));
+  
   }
 }

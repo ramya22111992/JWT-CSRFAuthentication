@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {DashboardService} from '../dashboard.service';
 import {FormGroup,FormControl,Validators} from '@angular/forms';
+import { take, concatMap } from 'rxjs/operators';
+
 
 
 @Component({
@@ -10,31 +12,58 @@ import {FormGroup,FormControl,Validators} from '@angular/forms';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+@ViewChild('prodImg')prodImg:ElementRef;
 
-  commentForm:FormGroup;
+  ProductForm:FormGroup;
+  products:any[];
+
+
 
   constructor(private serv:DashboardService,private router:Router) { }
 
   ngOnInit() {
 
-    this.commentForm=new FormGroup(
+    this.ProductForm=new FormGroup(
       {
-        username:new FormControl("",[Validators.required]),
-        userEmail:new FormControl("",[Validators.required]),
-        comment:new FormControl("",[Validators.required])
-      }
+        name:new FormControl("",[Validators.required]),
+        price:new FormControl("",[Validators.required]),
+        productID:new FormControl("",[])
+            }
     )
+
   }
 
-  submitComment()
+  
+
+  submitProduct()
   {
-this.serv.submitComment(this.commentForm.value).subscribe(data=>{console.log(data)},
+let form=new FormData();
+
+let productId$=this.serv.createProductId().pipe(take(1));
+
+productId$.pipe(concatMap(data=>{
+let filename=data+"."+this.prodImg.nativeElement.files[0].name.substring(this.prodImg.nativeElement.files[0].name.lastIndexOf(".")+1);
+this.ProductForm.get('productID').setValue(filename);
+
+form.append("uploads",this.prodImg.nativeElement.files[0],filename);
+form.append("productDetails",JSON.stringify(this.ProductForm.value));
+
+return this.serv.submitProduct(form);
+})).subscribe(data=>{
+  console.log(data)
+},
 err=>{
-  if(err.status==401 || err.status==403)
-  {
-this.router.navigate(['/loginPage']);
-  }
+  throw err;
 })
+
+  }
+
+  retrieveProduct()
+  {
+    this.serv.retrieveProduct().subscribe(data=>this.products=data,
+    err=>{
+     throw err;
+    })
   }
 
 }
