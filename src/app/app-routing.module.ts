@@ -21,10 +21,7 @@ const routes: Routes = [
     component:DashboardComponent,
     canActivate:[RouteActivateService]
   }
-  ,{
-    path:'error',
-    component:ErrorComponent
-  }
+ 
 ];
 
 @NgModule({

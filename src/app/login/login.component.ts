@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     })
 
 
-    this.serv.generateCSRF().subscribe(data=>console.log(data),err=>console.log(err));
+    this.serv.generateCSRF().subscribe(data=>console.log(data),err=>{throw err});
 
   }
 
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   {
 this.serv.loginUser(this.loginForm.value).subscribe(
 data=>{
-this.router.navigate(['/dash']);
+this.router.navigate(['/dash'],{state:data});
 
 },
 err=>{throw err}

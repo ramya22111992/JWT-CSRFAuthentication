@@ -1,5 +1,4 @@
 import { Component, OnInit ,ViewChild, ElementRef} from '@angular/core';
-import {Router} from '@angular/router';
 import {DashboardService} from '../dashboard.service';
 import {FormGroup,FormControl,Validators} from '@angular/forms';
 import { take, concatMap } from 'rxjs/operators';
@@ -16,10 +15,17 @@ export class DashboardComponent implements OnInit {
 
   ProductForm:FormGroup;
   products:any[];
+  user:string;
+  role:string;
+
+  availableRoles={
+    user:"User",
+    admin:"Admin" 
+ }
 
 
 
-  constructor(private serv:DashboardService,private router:Router) { }
+  constructor(private serv:DashboardService) { }
 
   ngOnInit() {
 
@@ -30,6 +36,9 @@ export class DashboardComponent implements OnInit {
         productID:new FormControl("",[])
             }
     )
+
+    this.user=history.state.user;
+    this.role=history.state.role;
 
   }
 

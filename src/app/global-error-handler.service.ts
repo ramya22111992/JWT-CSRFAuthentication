@@ -43,7 +43,6 @@ let zone=this.injector.get(NgZone);
         console.log(error);
      // Handle Client Error (Angular Error, ReferenceError...)     
    }
-  // Log the error anyway
 
   }
 

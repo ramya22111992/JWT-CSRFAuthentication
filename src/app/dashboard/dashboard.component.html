@@ -1,5 +1,5 @@
 
-
+<ng-container *ngIf="role===availableRoles.admin">
 <h4>Create new product</h4>
 
 <form [formGroup]="ProductForm" class="form-group jumbotron">
@@ -17,6 +17,7 @@
 
   <button [disabled]="ProductForm.invalid" class="btn btn-primary" (click)="submitProduct()">Post</button>
 </form>
+</ng-container>
 
 
 <button (click)="retrieveProduct()">View products</button>
