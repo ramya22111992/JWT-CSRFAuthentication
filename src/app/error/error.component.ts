@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit,Input, NgZone } from '@angular/core';
 import {ErrorNotificationService} from '../error-notification.service';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -10,15 +10,16 @@ import { Observable } from 'rxjs';
 })
 export class ErrorComponent implements OnInit {
 
-  constructor(private ErrorServ:ErrorNotificationService,private cd: ChangeDetectorRef) { }
+  constructor(private ErrorServ:ErrorNotificationService,private zone:NgZone) { }
 
   error:string;
 
   ngOnInit() {
     console.log("Error component loaded");
   this.ErrorServ.returnAsObservable().subscribe(data=>{
-    this.error=data; 
-    this.cd.detectChanges();
+    this.zone.run(()=>{
+      this.error=data; 
+    })
   });
 
   }
