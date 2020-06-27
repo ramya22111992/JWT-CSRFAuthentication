@@ -1,30 +1,29 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {catchError, shareReplay} from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
 
-  serverUrl:string="//localhost:8080";
-
   constructor(private http:HttpClient) { }
 
   createProductId():Observable<string>
   {
-  return  this.http.get(this.serverUrl+"/productID",{withCredentials:true,responseType:'text'}).pipe(catchError(err=>throwError(err)));
+  return  this.http.get(environment.baseUrl+"/productID",{responseType:'text'}).pipe(catchError(err=>throwError(err)));
   }
 
   submitProduct(form)
   {
-       return this.http.post(this.serverUrl+"/addProduct",form,{withCredentials:true}).pipe(catchError(err=>throwError(err)));
+       return this.http.post(environment.baseUrl+"/addProduct",form,).pipe(catchError(err=>throwError(err)));
   }
 
   retrieveProduct():Observable<any>
   {
-    return this.http.get(this.serverUrl+"/getProducts",{withCredentials:true}).pipe(catchError(err=>throwError(err)));
+    return this.http.get(environment.baseUrl+"/getProducts",).pipe(catchError(err=>throwError(err)));
   
   }
 }

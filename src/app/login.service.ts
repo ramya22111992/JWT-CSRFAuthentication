@@ -1,35 +1,31 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {catchError, shareReplay} from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-serverUrl:string="//localhost:8080";
-
   constructor(private http:HttpClient) { }
 
   loginUser(credentials):Observable<any>
   {
-return this.http.post(this.serverUrl+"/login",credentials,{withCredentials:true}).pipe(catchError(err=>throwError(err)));
+return this.http.post(environment.baseUrl+"/login",credentials).pipe(catchError(err=>throwError(err)));
   }
 
   generateCSRF():Observable<any>
   {
-    return this.http.get(this.serverUrl+"/",{withCredentials:true}).pipe(catchError(err=>throwError(err)));
+    return this.http.get(environment.baseUrl+"/").pipe(catchError(err=>throwError(err)));
   }
   
 
   isLoggedIn():Observable<boolean>
   {
-  return this.http.get<boolean>(this.serverUrl+"/IsLoggedIn",{withCredentials:true}).pipe(catchError(err=>throwError(err)))
+  return this.http.get<boolean>(environment.baseUrl+"/IsLoggedIn").pipe(catchError(err=>throwError(err)))
     
   }
-
-  
-
 
 }
