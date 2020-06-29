@@ -62,7 +62,7 @@ return this.serv.submitProduct(form);
   console.log(data)
 },
 err=>{
-  throw err;
+  console.log(err);
 })
 
   }
@@ -71,7 +71,7 @@ err=>{
   {
     this.serv.retrieveProduct().subscribe(data=>this.products=data,
     err=>{
-     throw err;
+     console.log(err);
     })
   }
 

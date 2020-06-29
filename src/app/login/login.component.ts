@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     })
 
 
-    this.serv.generateCSRF().subscribe(data=>console.log(data),err=>{throw err});
+    this.serv.generateCSRF().subscribe(data=>console.log(data),err=>{console.log( err)});
 
   }
 
@@ -32,7 +32,7 @@ data=>{
 this.router.navigate(['/dash'],{state:data});
 
 },
-err=>{throw err}
+err=>{console.log(err)}
 );
   }
 
