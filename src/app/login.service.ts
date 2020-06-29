@@ -13,18 +13,18 @@ export class LoginService {
 
   loginUser(credentials):Observable<any>
   {
-return this.http.post(environment.baseUrl+"/login",credentials).pipe(catchError(err=>throwError(err)));
+return this.http.post(environment.baseUrl+"/login",credentials)
   }
 
   generateCSRF():Observable<any>
   {
-    return this.http.get(environment.baseUrl+"/").pipe(catchError(err=>throwError(err)));
+    return this.http.get(environment.baseUrl+"/")
   }
   
 
   isLoggedIn():Observable<boolean>
   {
-  return this.http.get<boolean>(environment.baseUrl+"/IsLoggedIn").pipe(catchError(err=>throwError(err)))
+  return this.http.get<boolean>(environment.baseUrl+"/IsLoggedIn")
     
   }
 

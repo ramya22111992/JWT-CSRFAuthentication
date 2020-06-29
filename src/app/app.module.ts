@@ -1,15 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
-
-
+import {HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { GlobalErrorHandlerService } from './global-error-handler.service';
 import { ErrorComponent } from './error/error.component';
+import { ErrorInterceptorService } from './error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -25,8 +23,9 @@ import { ErrorComponent } from './error/error.component';
     HttpClientXsrfModule
   ],
   providers: [{
-    provide: ErrorHandler,
-useClass: GlobalErrorHandlerService
+provide: HTTP_INTERCEPTORS,
+useClass: ErrorInterceptorService,
+multi:true
 }
 ],
   bootstrap: [AppComponent]

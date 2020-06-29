@@ -13,17 +13,17 @@ export class DashboardService {
 
   createProductId():Observable<string>
   {
-  return  this.http.get(environment.baseUrl+"/productID",{responseType:'text'}).pipe(catchError(err=>throwError(err)));
+  return  this.http.get(environment.baseUrl+"/productID",{responseType:'text'})
   }
 
   submitProduct(form)
   {
-       return this.http.post(environment.baseUrl+"/addProduct",form,).pipe(catchError(err=>throwError(err)));
+       return this.http.post(environment.baseUrl+"/addProduct",form)
   }
 
   retrieveProduct():Observable<any>
   {
-    return this.http.get(environment.baseUrl+"/getProducts",).pipe(catchError(err=>throwError(err)));
+    return this.http.get(environment.baseUrl+"/getProducts")
   
   }
 }
